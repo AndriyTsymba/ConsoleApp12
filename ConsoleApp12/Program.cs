@@ -18,7 +18,13 @@ namespace ConsoleApp12
         void ShowOdd();
     }
 
-    public class ArrayClass : ICalc, IOutput2
+    public interface ICalc2
+    {
+        int CountDistinct();
+        int EqualToValue(int valueToCompare);
+    }
+
+    public class ArrayClass : ICalc, IOutput2, ICalc2
     {
         private int[] array;
 
@@ -29,46 +35,34 @@ namespace ConsoleApp12
 
         public int Less(int valueToCompare)
         {
-            int count = 0;
-            foreach (int num in array)
-            {
-                if (num < valueToCompare)
-                    count++;
-            }
-            return count;
+            return array.Count(num => num < valueToCompare);
         }
 
         public int Greater(int valueToCompare)
         {
-            int count = 0;
-            foreach (int num in array)
-            {
-                if (num > valueToCompare)
-                    count++;
-            }
-            return count;
+            return array.Count(num => num > valueToCompare);
         }
 
         public void ShowEven()
         {
             Console.WriteLine("Парні значення масиву:");
-            foreach (int num in array)
-            {
-                if (num % 2 == 0)
-                    Console.Write(num + " ");
-            }
-            Console.WriteLine();
+            Console.WriteLine(string.Join(" ", array.Where(num => num % 2 == 0)));
         }
 
         public void ShowOdd()
         {
             Console.WriteLine("Непарні значення масиву:");
-            foreach (int num in array)
-            {
-                if (num % 2 != 0)
-                    Console.Write(num + " ");
-            }
-            Console.WriteLine();
+            Console.WriteLine(string.Join(" ", array.Where(num => num % 2 != 0)));
+        }
+
+        public int CountDistinct()
+        {
+            return array.Distinct().Count();
+        }
+
+        public int EqualToValue(int valueToCompare)
+        {
+            return array.Count(num => num == valueToCompare);
         }
     }
 
@@ -76,7 +70,7 @@ namespace ConsoleApp12
     {
         static void Main()
         {
-            int[] testArray = { 1, 5, 8, 3, 7, 10, 2 };
+            int[] testArray = { 1, 5, 8, 3, 7, 10, 2, 5, 8, 3 };
             ArrayClass arrayObj = new ArrayClass(testArray);
 
             int compareValue = 5;
@@ -85,6 +79,9 @@ namespace ConsoleApp12
 
             arrayObj.ShowEven();
             arrayObj.ShowOdd();
+
+            Console.WriteLine($"Кількість унікальних значень: {arrayObj.CountDistinct()}");
+            Console.WriteLine($"Кількість значень, рівних {compareValue}: {arrayObj.EqualToValue(compareValue)}");
         }
     }
 }
