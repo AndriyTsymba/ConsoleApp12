@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 namespace ConsoleApp12
 {
 
-
-    interface IMath
+    interface ISort
     {
-        int Max();
-        int Min();
-        float Avg();
-        bool Search(int valueToSearch);
+        void SortAsc();
+        void SortDesc();
+        void SortByParam(bool isAsc);
     }
-    class Array : IMath
+
+    class Array : ISort
     {
         private int[] data;
         public Array(int[] data)
@@ -60,7 +59,24 @@ namespace ConsoleApp12
             }
             return false;
         }
+        public void SortAsc()
+        {
+            Array.Sort(data);
+        }
+        public void SortDesc()
+        {
+            Array.Sort(data);
+            Array.Reverse(data);
+        }
+        public void SortByParam(bool isAsc)
+        {
+            if (isAsc)
+                SortAsc();
+            else
+                SortDesc();
+        }
     }
+
     class Program
     {
         static void Main(string[] args)
@@ -72,6 +88,18 @@ namespace ConsoleApp12
             Console.WriteLine(array.Avg());
             Console.WriteLine(array.Search(9));
             Console.WriteLine(array.Search(3));
+
+            array.SortAsc();
+            Console.WriteLine(string.Join(", ", numbers));
+
+            array.SortDesc();
+            Console.WriteLine(string.Join(", ", numbers));
+
+            array.SortByParam(true);
+            Console.WriteLine(string.Join(", ", numbers));
+
+            array.SortByParam(false);
+            Console.WriteLine(string.Join(", ", numbers));
         }
     }
 }
