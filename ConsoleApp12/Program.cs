@@ -11,7 +11,14 @@ namespace ConsoleApp12
         int Less(int valueToCompare);
         int Greater(int valueToCompare);
     }
-    public class ArrayClass : ICalc
+
+    public interface IOutput2
+    {
+        void ShowEven();
+        void ShowOdd();
+    }
+
+    public class ArrayClass : ICalc, IOutput2
     {
         private int[] array;
 
@@ -19,6 +26,7 @@ namespace ConsoleApp12
         {
             array = arr;
         }
+
         public int Less(int valueToCompare)
         {
             int count = 0;
@@ -29,6 +37,7 @@ namespace ConsoleApp12
             }
             return count;
         }
+
         public int Greater(int valueToCompare)
         {
             int count = 0;
@@ -39,7 +48,30 @@ namespace ConsoleApp12
             }
             return count;
         }
+
+        public void ShowEven()
+        {
+            Console.WriteLine("Парні значення масиву:");
+            foreach (int num in array)
+            {
+                if (num % 2 == 0)
+                    Console.Write(num + " ");
+            }
+            Console.WriteLine();
+        }
+
+        public void ShowOdd()
+        {
+            Console.WriteLine("Непарні значення масиву:");
+            foreach (int num in array)
+            {
+                if (num % 2 != 0)
+                    Console.Write(num + " ");
+            }
+            Console.WriteLine();
+        }
     }
+
     class Program
     {
         static void Main()
@@ -50,6 +82,9 @@ namespace ConsoleApp12
             int compareValue = 5;
             Console.WriteLine($"Кількість елементів менше {compareValue}: {arrayObj.Less(compareValue)}");
             Console.WriteLine($"Кількість елементів більше {compareValue}: {arrayObj.Greater(compareValue)}");
+
+            arrayObj.ShowEven();
+            arrayObj.ShowOdd();
         }
     }
 }
