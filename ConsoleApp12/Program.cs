@@ -6,25 +6,14 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp12
 {
-    public interface ICalc
-    {
-        int Less(int valueToCompare);
-        int Greater(int valueToCompare);
-    }
-
-    public interface IOutput2
-    {
-        void ShowEven();
-        void ShowOdd();
-    }
-
+   
     public interface ICalc2
     {
         int CountDistinct();
         int EqualToValue(int valueToCompare);
     }
 
-    public class ArrayClass : ICalc, IOutput2, ICalc2
+    public class ArrayClass : ICalc2
     {
         private int[] array;
 
