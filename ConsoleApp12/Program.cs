@@ -6,48 +6,72 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp12
 {
-    public interface IOutput
-    {
-        void Show();
-        void Show(string info);
-    }
-    public class Array : IOutput
-    {
-        private int[] _arr;
 
-        public Array(int[] arr)
+
+    interface IMath
+    {
+        int Max();
+        int Min();
+        float Avg();
+        bool Search(int valueToSearch);
+    }
+    class Array : IMath
+    {
+        private int[] data;
+        public Array(int[] data)
         {
-            _arr = arr;
+            this.data = data;
         }
-        public void Show()
+        public int Max()
         {
-            Console.WriteLine("Елементи масиву:");
-            foreach (var item in _arr)
+            if (data.Length == 0) throw new InvalidOperationException();
+            int max = data[0];
+            for (int i = 1; i < data.Length; i++)
             {
-                Console.Write(item + " ");
+                if (data[i] > max) max = data[i];
             }
-            Console.WriteLine();
+            return max;
         }
-        public void Show(string info)
+        public int Min()
         {
-            Console.WriteLine(info);
-            Console.WriteLine("Елементи масиву:");
-            foreach (var item in _arr)
+            if (data.Length == 0) throw new InvalidOperationException();
+            int min = data[0];
+            for (int i = 1; i < data.Length; i++)
             {
-                Console.Write(item + " ");
+                if (data[i] < min) min = data[i];
             }
-            Console.WriteLine();
+            return min;
+        }
+        public float Avg()
+        {
+            if (data.Length == 0) throw new InvalidOperationException();
+            int sum = 0;
+            for (int i = 0; i < data.Length; i++)
+            {
+                sum += data[i];
+            }
+            return (float)sum / data.Length;
+        }
+        public bool Search(int valueToSearch)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i] == valueToSearch) return true;
+            }
+            return false;
         }
     }
-
     class Program
     {
         static void Main(string[] args)
-        { 
-            int[] numbers = { 1, 2, 3, 4, 5 };
-            IOutput array = new Array(numbers);
-            array.Show();
-            array.Show("Це масив цілих чисел:");
+        {
+            int[] numbers = { 4, 7, 2, 9, 5 };
+            Array array = new Array(numbers);
+            Console.WriteLine(array.Max());
+            Console.WriteLine(array.Min());
+            Console.WriteLine(array.Avg());
+            Console.WriteLine(array.Search(9));
+            Console.WriteLine(array.Search(3));
         }
     }
 }
